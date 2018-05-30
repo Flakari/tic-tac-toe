@@ -1,0 +1,41 @@
+#container {
+    width: 440px;
+    height: 440px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+#game-board {
+    background-color: rgb(66, 66, 66);
+    height: 100%;
+    width: 100%;
+}
+
+.game-space {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 4rem;
+    text-align: center;
+    line-height: 140px;
+    background-color: white;
+    height: 140px;
+    width: 140px;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.game-space:hover {
+    background-color: rgb(53, 255, 104);
+}
+
+.left {
+    margin-right: 10px;
+    
+}
+
+.right {
+    margin-left: 10px;
+}
+
+
+
+
