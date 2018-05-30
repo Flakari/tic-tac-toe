@@ -1,22 +1,33 @@
 const gameBoard = (() => {
     const board = ['X', 'O', 'O'];
-    const working = () => console.log('It\'s working');
     const showBoard = () => console.log(board);
-    return {working, showBoard};
+    return {showBoard};
 })();
 
 const displayController = (() => {
-    const working = () => console.log('This is working as well');
-    return {working};
+    let symbol = 'X'; //Placeholder value
+    let boardSpaces = document.querySelectorAll('.game-space');
+    boardSpaces.forEach(space => {
+        space.addEventListener('click', e => {
+            if (e.target.textContent == '') {
+                if (symbol == 'O') {
+                    e.target.textContent = 'O';
+                    symbol = 'X';
+                } else {
+                    e.target.textContent = 'X';
+                    symbol = 'O';
+                }
+            } else {
+                return;
+            }
+        });
+    });
 })();
 
 const player = (symbol) => {
     return {symbol};
 };
 
-gameBoard.working();
-displayController.working();
-console.log(gameBoard.board);
 gameBoard.showBoard();
 
 let player1 = player('X');
