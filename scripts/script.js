@@ -1,10 +1,10 @@
-const player = (symbol) => {
+const player = (symbol, name) => {
     const spaces = [];
-    return {symbol, spaces};
+    return {symbol, spaces, name};
 };
 
-let player1 = player('X');
-let player2 = player('O');
+let player1 = player('X', 'Player 1');
+let player2 = player('O', 'Player 2');
 
 const gameBoard = (() => {
     const board = [];
@@ -29,40 +29,27 @@ const displayController = (() => {
         space.addEventListener('click', e => {
             if (e.target.textContent == '' && gameBoard.gameOn == true) {
                 if (symbol == player1.symbol) {
-                    //gamePlay(e, player1.spaces, boardSpaces, symbol);
-                    e.target.textContent = player1.symbol;
-                    player1.spaces.push(boardSpaces.indexOf(e.target));
-                    gameBoard.board[boardSpaces.indexOf(e.target)] = e.target.textContent;
-                    console.log(player1.spaces);
-                    winCheck(player1.spaces);
+                    gamePlay(e, player1.spaces, boardSpaces, symbol, player1.name);
                     symbol = player2.symbol;
                 } else {
-                    e.target.textContent = player2.symbol;
-                    player2.spaces.push(boardSpaces.indexOf(e.target));
-                    gameBoard.board[boardSpaces.indexOf(e.target)] = e.target.textContent;
-                    console.log(player2.spaces);
-                    winCheck(player2.spaces);
+                    gamePlay(e, player2.spaces, boardSpaces, symbol, player2.name);
                     symbol = player1.symbol;
                 }
             } else {
                 return;
             }
-            console.log(gameBoard.board);
         });
     });
 })();
 
-function gamePlay(event, spaces, boardSpaces, symbol) {
-    event.target.textContent = player1.symbol;
-    player1.spaces.push(boardSpaces.indexOf(event.target));
+function gamePlay(event, spaces, boardSpaces, symbol, name) {
+    event.target.textContent = symbol;
+    spaces.push(boardSpaces.indexOf(event.target));
     gameBoard.board[boardSpaces.indexOf(event.target)] = event.target.textContent;
-    console.log(player1.spaces);
-    winCheck(player1.spaces);
-    symbol = player2.symbol;
-    return symbol;
+    winCheck(spaces, name);
 }
 
-function winCheck(playerSpaces) {
+function winCheck(playerSpaces, name) {
     let arrayCheck = [];
     for(let i = 0; i < gameBoard.winConditions.length; i++) {
         for(let j = 0; j < gameBoard.winConditions[i].length; j++) {
@@ -73,7 +60,7 @@ function winCheck(playerSpaces) {
             }
             if (arrayCheck.length == 3) {
                 if (arrayCheck.includes('false') === false) {
-                    console.log(arrayCheck);
+                    console.log(name + ' wins!');
                     gameBoard.gameOn = false;
                 } else {
                     arrayCheck = [];
@@ -82,6 +69,6 @@ function winCheck(playerSpaces) {
         }
     }
     if (gameBoard.board.length === 9 && gameBoard.board.includes() === false && gameBoard.gameOn === true) {
-        console.log('tie game');
+        console.log('Tie game!');
     }
 }
