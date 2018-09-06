@@ -7,7 +7,8 @@ let player1 = player('X', 'Player 1');
 let player2 = player('O', 'Player 2');
 
 const gameBoard = (() => {
-    const board = [];
+    let board = [];
+    let symbol = player1.symbol;
     let gameOn = true;
     const winConditions = [
         [0, 1, 2],
@@ -19,11 +20,12 @@ const gameBoard = (() => {
         [0, 4, 8],
         [2, 4, 6]
     ];
-    return {board, gameOn, winConditions};
+    return {board, gameOn, winConditions, symbol};
 })();
 
 const displayController = (() => {
-    let symbol = player1.symbol;
+    let {symbol} = gameBoard;
+    const resetButton = document.querySelector('#reset');
     const boardSpaces = Array.from(document.querySelector('#game-board').children);
     boardSpaces.forEach(space => {
         space.addEventListener('click', e => {
@@ -40,6 +42,19 @@ const displayController = (() => {
             }
         });
     });
+
+    resetButton.addEventListener('click', () => {
+        let {board} = gameBoard;
+        symbol = player1.symbol;
+        board.splice(0, board.length);
+        player1.spaces.splice(0, player1.spaces.length);
+        player2.spaces.splice(0, player2.spaces.length);
+        gameBoard.gameOn = true;
+        displayController.boardSpaces.forEach(space => {
+            space.textContent = '';
+        });
+    });
+    return {boardSpaces};
 })();
 
 function gamePlay(event, spaces, boardSpaces, symbol, name) {
