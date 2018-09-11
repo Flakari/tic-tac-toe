@@ -1,3 +1,5 @@
+const gameInfo = document.querySelector('#info-panel');
+
 const player = (symbol, name) => {
     const spaces = [];
     return {symbol, spaces, name};
@@ -8,8 +10,8 @@ let player2 = player('O', 'Player 2');
 
 const gameBoard = (() => {
     let board = [];
-    let symbol = player1.symbol;
-    let gameOn = true;
+    let currentPlayer = player1;
+    let gameOn = false;
     const winConditions = [
         [0, 1, 2],
         [3, 4, 5],
@@ -20,22 +22,20 @@ const gameBoard = (() => {
         [0, 4, 8],
         [2, 4, 6]
     ];
-    return {board, gameOn, winConditions, symbol};
+    return {board, gameOn, winConditions, currentPlayer};
 })();
 
 const displayController = (() => {
-    let {symbol} = gameBoard;
-    const resetButton = document.querySelector('#reset');
+    let currentPlayer = gameBoard.currentPlayer;
+    const newGame = document.querySelector('#new-game');
     const boardSpaces = Array.from(document.querySelector('#game-board').children);
     boardSpaces.forEach(space => {
         space.addEventListener('click', e => {
             if (e.target.textContent == '' && gameBoard.gameOn == true) {
-                if (symbol == player1.symbol) {
-                    gamePlay(e, player1.spaces, boardSpaces, symbol, player1.name);
-                    symbol = player2.symbol;
-                } else {
-                    gamePlay(e, player2.spaces, boardSpaces, symbol, player2.name);
-                    symbol = player1.symbol;
+                gamePlay(e, currentPlayer.spaces, boardSpaces, currentPlayer.symbol, currentPlayer.name);
+                currentPlayer == player1 ? currentPlayer = player2 : currentPlayer = player1;
+                if (gameBoard.gameOn == true) {
+                    gameInfo.textContent = currentPlayer.name + '\'s Turn!';
                 }
             } else {
                 return;
@@ -43,9 +43,10 @@ const displayController = (() => {
         });
     });
 
-    resetButton.addEventListener('click', () => {
+    newGame.addEventListener('click', () => {
         let {board} = gameBoard;
-        symbol = player1.symbol;
+        currentPlayer = player1;
+        gameInfo.textContent = currentPlayer.name + '\'s Turn!';
         board.splice(0, board.length);
         player1.spaces.splice(0, player1.spaces.length);
         player2.spaces.splice(0, player2.spaces.length);
@@ -75,7 +76,7 @@ function winCheck(playerSpaces, name) {
             }
             if (arrayCheck.length == 3) {
                 if (arrayCheck.includes('false') === false) {
-                    console.log(name + ' wins!');
+                    gameInfo.textContent = name + ' wins!';
                     gameBoard.gameOn = false;
                 } else {
                     arrayCheck = [];
@@ -84,6 +85,7 @@ function winCheck(playerSpaces, name) {
         }
     }
     if (gameBoard.board.length === 9 && gameBoard.board.includes() === false && gameBoard.gameOn === true) {
-        console.log('Tie game!');
+        gameInfo.textContent = 'Tie game!';
+        gameBoard.gameOn = false;
     }
 }
