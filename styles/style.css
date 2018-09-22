@@ -1,5 +1,6 @@
 #container {
-    width: 600px;
+    width: 725px;
+    height: 720px;
     margin: auto;
     margin-top: 20px;
     text-align: center;
@@ -54,4 +55,39 @@
     width: 250px;
     height: 40px;
     font-size: 1.2em;
+}
+
+#scoreboard-p1 {
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    width: 130px;
+    position: relative;
+    bottom: 355px;
+    font-size: 1.4em;
+}
+
+#scoreboard-p1 h3 {
+    margin-bottom: 10px;
+}
+
+#score-p1 {
+    margin-top: 0;
+    font-size: 2em;
+}
+
+#scoreboard-p2 {
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    margin-left: 595px;
+    position: relative;
+    bottom: 473px;
+    width: 130px;
+    font-size: 1.4em;
+}
+
+#scoreboard-p2 h3 {
+    margin-bottom: 10px;
+}
+
+#score-p2 {
+    margin-top: 0;
+    font-size: 2em;
 }
