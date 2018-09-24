@@ -123,13 +123,7 @@ function winCheck() {
                 if (arrayCheck.includes('false') === false) {
                     gameInfo.textContent = gameBoard.displayCurrentPlayer().name + ' wins!';
                     displayController.newGame.innerText = 'Start Game';
-                    if (gameBoard.displayCurrentPlayer() == player1) {
-                        player1.score += 1;
-                        player1.scoreDisplay.innerText = player1.score;
-                    } else {
-                        player2.score += 1;
-                        player2.scoreDisplay.innerText = player2.score;
-                    }
+                    updateScore();
                     gameBoard.changeGameState(false);
                 } else {
                     arrayCheck = [];
@@ -137,6 +131,20 @@ function winCheck() {
             }
         }
     }
+    tieCheck();
+}
+
+function updateScore() {
+    if (gameBoard.displayCurrentPlayer() == player1) {
+        player1.score += 1;
+        player1.scoreDisplay.innerText = player1.score;
+    } else {
+        player2.score += 1;
+        player2.scoreDisplay.innerText = player2.score;
+    }
+}
+
+function tieCheck() {
     if (gameBoard.displayBoard().length === 9 && gameBoard.displayBoard().includes() === false && gameBoard.displayGameState() === true) {
         gameInfo.textContent = 'Tie game!';
         gameBoard.changeGameState(false);
